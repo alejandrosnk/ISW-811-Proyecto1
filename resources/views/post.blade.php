@@ -1,10 +1,15 @@
-<!DOCTYPE html>
+<!doctype html>
 
-    <title>My blog</title>
-    <link rel="stylesheet" href="/app.css">
+<title>My Blog</title>
+<link rel="stylesheet" href="/app.css">
+
 <body>
     <article>
-        <?=$post; ?>
+        <h1><?= $post->title; ?></h1>
+
+        <div>
+            <?= $post->body; ?>
+        </div>
     </article>
     <a href="/">Go Back</a>
 </body>
