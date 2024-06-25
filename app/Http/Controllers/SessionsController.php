@@ -1,5 +1,7 @@
 <?php
 
+namespace App\Http\Controllers;
+
 use Illuminate\Validation\ValidationException;
 
 class SessionsController extends Controller
