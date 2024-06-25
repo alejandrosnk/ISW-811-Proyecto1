@@ -21,7 +21,7 @@ Route::get('/', function () {
     //     logger($query->sql,$query->bindings);
     // });
     return view('posts', [
-        'posts' => Post::latest()->with(['category','author'])->get()
+        'posts' => Post::latest()->get()
     ]);
 });
 
@@ -45,6 +45,6 @@ Route::get('authors/{author:username}', function (User $author) {
 });
 
 
-Auth::routes();
+//Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
