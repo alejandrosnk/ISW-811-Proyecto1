@@ -55,3 +55,4 @@
         </footer>
     </section>
 </body>
+<x-flash />
