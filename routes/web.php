@@ -18,20 +18,30 @@ use App\Http\Controllers\RegisterController;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('ping', function(){
-$mailchimp = new \MailchimpMarketing\ApiClient();
-
-$mailchimp->setConfig([
-	'apiKey' => config('services.mailchimp.key'),
-	'server' => 'us18'
-]);
-
-$response = $mailchimp->lists->addListMember('9ff5300f37',[
-    'email_address'=> 'lsolanor@est.utn.ac.cr',
-    'status'=> 'subscribed'
-]);
-ddd($response);
+Route::post('newsletter', function () {
+    request()->validate(['email' => 'required|email']);
+    
+    $mailchimp = new \MailchimpMarketing\ApiClient();
+    
+    $mailchimp->setConfig([
+        'apiKey' => config('services.mailchimp.key'),
+        'server' => 'us18'
+    ]);
+    try{
+        $response = $mailchimp->lists->addListMember('9ff5300f37', [
+            'email_address' => request('email'),
+            'status' => 'subscribed'
+        ]);
+    }catch(\Exception $e){
+        throw \Illuminate\Validation\ValidationException::withMessages([
+            'email'=>'This email could not bu added to our newsletter list.'
+        ]);
+    }
+    
+    
+    return redirect('/')->with('success', 'You are now signed up for our newsletter!');
 });
+
 
 Route::get('/', [PostController::class, 'index'])->name('home');
 Route::get('posts/{post:slug}', [PostController::class, 'show']);
