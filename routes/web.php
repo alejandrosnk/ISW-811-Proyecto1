@@ -18,6 +18,20 @@ use App\Http\Controllers\RegisterController;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get('ping', function(){
+$mailchimp = new \MailchimpMarketing\ApiClient();
+
+$mailchimp->setConfig([
+	'apiKey' => config('services.mailchimp.key'),
+	'server' => 'us18'
+]);
+
+$response = $mailchimp->lists->addListMember('9ff5300f37',[
+    'email_address'=> 'lsolanor@est.utn.ac.cr',
+    'status'=> 'subscribed'
+]);
+ddd($response);
+});
 
 Route::get('/', [PostController::class, 'index'])->name('home');
 Route::get('posts/{post:slug}', [PostController::class, 'show']);
